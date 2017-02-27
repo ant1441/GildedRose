@@ -1,0 +1,13 @@
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\GildedRose.pdb
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\ApprovalTests.dll
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\ApprovalUtilities.dll
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\ApprovalUtilities.Net45.dll
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\nunit.framework.dll
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\ApprovalTests.xml
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\ApprovalUtilities.xml
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\ApprovalUtilities.Net45.xml
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\nunit.framework.xml
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\obj\Debug\GildedRose.csprojResolveAssemblyReference.cache
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\obj\Debug\GildedRose.pdb
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\bin\Debug\GildedRose.exe
+C:\Programming\Leeds Code Dojo\GildedRose\Solutions\grant_csharp\obj\Debug\GildedRose.exe
