@@ -51,26 +51,25 @@ impl GildedRose {
                 return qual + 1;
             }
             ("Aged Brie", _) => {
-                qual += 1;
                 if item.sell_in <= 0 {
-                    qual += 1;
+                    return qual + 2;
                 }
-                return qual;
+                return qual + 1;
             }
             (_, _) => {
-                if qual > 0 {
-                    qual -= 1;
-                    if item.name.starts_with("Conjured") {
-                        qual -= 1;
-                    }
+                if qual <= 0 {
+                    return qual;
                 }
-
+                if item.name.starts_with("Conjured") {
+                    if item.sell_in <= 0 {
+                        return qual - 3;
+                    }
+                    return qual - 2;
+                }
                 if item.sell_in <= 0 {
-                    if qual > 0 {
-                        qual -= 1;
-                    }
+                    return qual - 2;
                 }
-                return qual;
+                return qual - 1;
             }
         }
     }
