@@ -28,51 +28,52 @@ impl GildedRose {
 
     pub fn update_quality(&mut self) {
         for mut item in &mut self.items {
-            GildedRose::handle_quality(&mut item);
+            item.quality = GildedRose::handle_quality(&mut item);
             GildedRose::decrease_sell_by(&mut item);
         }
     }
 
-    fn handle_quality(item: &mut Item) {
-        match (item.name.as_ref(), item.quality)  {
-            ("Sulfuras, Hand of Ragnaros", _) => return,
-            (_, n) if n >= 50 => return,
-            (_, _) => (),
-        }
-
-        if item.name == "Backstage passes to a TAFKAL80ETC concert" {
-            item.quality += 1;
-            if item.sell_in < 11 {
-                if item.sell_in < 6 {
-                    item.quality += 1;
+    fn handle_quality(item: &Item) -> i32 {
+        let mut qual = item.quality;
+        match (item.name.as_ref(), item.quality) {
+            ("Sulfuras, Hand of Ragnaros", q) => return q,
+            (_, n) if n >= 50 => return n,
+            ("Backstage passes to a TAFKAL80ETC concert", _) => {
+                qual += 1;
+                if item.sell_in < 11 {
+                    if item.sell_in < 6 {
+                        qual += 1;
+                    }
+                    qual += 1;
                 }
-                item.quality += 1;
+                if item.sell_in <= 0 {
+                    qual = 0;
+                }
+                return qual;
             }
-            if item.sell_in <= 0 {
-                item.quality = 0;
+            ("Aged Brie", _) => {
+                qual += 1;
+                if item.sell_in <= 0 {
+                    qual += 1;
+                }
+                return qual;
             }
-            return;
-        }
-        if item.name == "Aged Brie" {
-            item.quality += 1;
-            if item.sell_in <= 0 {
-                item.quality += 1;
-            }
-            return;
-        }
-        if item.quality > 0 {
-            item.quality -= 1;
-            if item.name.starts_with("Conjured") {
-                item.quality -= 1;
-            }
-        }
+            (_, _) => {
+                if qual > 0 {
+                    qual -= 1;
+                    if item.name.starts_with("Conjured") {
+                        qual -= 1;
+                    }
+                }
 
-        if item.sell_in <= 0 {
-            if item.quality > 0 {
-                item.quality -= 1;
+                if item.sell_in <= 0 {
+                    if qual > 0 {
+                        qual -= 1;
+                    }
+                }
+                return qual;
             }
         }
-
     }
 
     fn decrease_sell_by(item: &mut Item) {
