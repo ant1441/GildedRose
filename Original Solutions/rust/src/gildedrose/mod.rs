@@ -34,12 +34,12 @@ impl GildedRose {
     }
 
     fn handle_quality(item: &mut Item) {
-        if item.name == "Sulfuras, Hand of Ragnaros" {
-            return;
+        match (item.name.as_ref(), item.quality)  {
+            ("Sulfuras, Hand of Ragnaros", _) => return,
+            (_, n) if n >= 50 => return,
+            (_, _) => (),
         }
-        if item.quality >= 50 {
-            return
-        }
+
         if item.name == "Backstage passes to a TAFKAL80ETC concert" {
             item.quality += 1;
             if item.sell_in < 11 {
