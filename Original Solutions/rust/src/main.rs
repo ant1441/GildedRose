@@ -29,3 +29,11 @@ fn main() {
         rose.update_quality();
     }
 }
+
+#[cfg(test)]
+mod test {
+    #[test]
+    fn main_runs() {
+        super::main()
+    }
+}
