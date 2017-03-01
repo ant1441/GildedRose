@@ -92,7 +92,9 @@ pub fn test_sulfuras_never_changes() {
 
 #[test]
 pub fn test_backstage_passes_increases_in_quality() {
-    let items = vec![Item::new(String::from("Backstage passes to a TAFKAL80ETC concert"), 20, 45)];
+    let items = vec![Item::new(String::from("Backstage passes to a TAFKAL80ETC concert"),
+                               20,
+                               45)];
     let mut rose = GildedRose::new(items);
 
     rose.update_quality();
@@ -113,7 +115,9 @@ pub fn test_backstage_passes_increases_in_quality() {
 
 #[test]
 pub fn test_backstage_passes_increases_in_quality_faster_when_its_closer_to_sell_by() {
-    let items = vec![Item::new(String::from("Backstage passes to a TAFKAL80ETC concert"), 11, 20)];
+    let items = vec![Item::new(String::from("Backstage passes to a TAFKAL80ETC concert"),
+                               11,
+                               20)];
     let mut rose = GildedRose::new(items);
 
     rose.update_quality();
