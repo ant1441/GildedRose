@@ -35,21 +35,20 @@ impl GildedRose {
 
     fn handle_quality(item: &Item) -> i32 {
         let mut qual = item.quality;
-        match (item.name.as_ref(), item.quality) {
-            ("Sulfuras, Hand of Ragnaros", q) => return q,
-            (_, n) if n >= 50 => return n,
+        match (item.name.as_ref(), qual) {
+            ("Sulfuras, Hand of Ragnaros", n) => n,
+            (_, n) if n >= 50 => n,
             ("Backstage passes to a TAFKAL80ETC concert", _) => {
-                qual += 1;
-                if item.sell_in < 11 {
-                    if item.sell_in < 6 {
-                        qual += 1;
-                    }
-                    qual += 1;
-                }
                 if item.sell_in <= 0 {
-                    qual = 0;
+                    return 0;
                 }
-                return qual;
+                if item.sell_in < 6 {
+                    return qual + 3;
+                }
+                if item.sell_in < 11 {
+                    return qual + 2;
+                }
+                return qual + 1;
             }
             ("Aged Brie", _) => {
                 qual += 1;
