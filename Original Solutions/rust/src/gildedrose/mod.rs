@@ -27,7 +27,7 @@ impl GildedRose {
     }
 
     pub fn update_quality(&mut self) {
-        for item in &mut self.items {
+        for mut item in &mut self.items {
             if item.name != "Aged Brie" &&
                item.name != "Backstage passes to a TAFKAL80ETC concert" {
                 if item.quality > 0 {
@@ -60,11 +60,7 @@ impl GildedRose {
                 }
             }
 
-            if item.name != "Sulfuras, Hand of Ragnaros" {
-                item.sell_in = item.sell_in - 1;
-            }
-
-            if item.sell_in < 0 {
+            if item.sell_in <= 0 {
                 if item.name != "Aged Brie" {
                     if item.name != "Backstage passes to a TAFKAL80ETC concert" {
                         if item.quality > 0 {
@@ -82,6 +78,13 @@ impl GildedRose {
                 }
             }
 
+            GildedRose::decrease_sell_by(&mut item);
+        }
+    }
+
+    fn decrease_sell_by(item: &mut Item) {
+        if item.name != "Sulfuras, Hand of Ragnaros" {
+            item.sell_in = item.sell_in - 1;
         }
     }
 }
