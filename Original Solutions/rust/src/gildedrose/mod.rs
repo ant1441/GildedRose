@@ -7,6 +7,7 @@ pub struct Item {
     pub quality: i32,
 }
 
+#[derive(PartialEq, Eq)]
 enum Type {
     Legendary,
     Rare,
@@ -32,8 +33,12 @@ impl Item {
         }
     }
 
+    fn is_conjured(&self) -> bool {
+        self.name.starts_with("Conjured")
+    }
+
     fn increment_quality(&self, n: i32) -> i32 {
-        if self.name.starts_with("Conjured") {
+        if self.is_conjured() {
             self.quality + (2 * n)
         } else {
             self.quality + n
@@ -41,7 +46,7 @@ impl Item {
     }
 
     fn decrement_quality(&self, n: i32) -> i32 {
-        if self.name.starts_with("Conjured") {
+        if self.is_conjured() {
             self.quality - (2 * n)
         } else {
             self.quality - n
@@ -66,36 +71,27 @@ impl GildedRose {
     }
 
     fn handle_quality(item: &Item) -> i32 {
-        match (item.type_of(), item.quality) {
-            (Type::Legendary, n) => n,
-            (_, n) if n >= 50 => n,
-            (Type::RareWithTime, _) => {
-                match item.sell_in {
-                    n if n <= 0 => 0,
-                    1...5 => item.increment_quality(3),
-                    6...10 => item.increment_quality(2),
-                    _ => item.increment_quality(1),
-                }
-            }
-            (Type::Rare, _) => {
-                match item.sell_in {
-                    n if n <= 0 => item.increment_quality(2),
-                    _ => item.increment_quality(1),
-                }
-            }
-            (Type::Normal, n) if n <= 0 => item.quality,
-            (Type::Normal, _) => {
-                if item.sell_in <= 0 {
-                    return item.decrement_quality(2);
-                } else {
-                    return item.decrement_quality(1);
-                }
-            }
+        match (item.type_of(), item.quality, item.sell_in) {
+            (Type::Legendary, quality, _) => quality,
+
+            (_, quality, _) if quality >= 50 => quality,
+
+            (Type::RareWithTime, _, sell_in) if sell_in <= 0 => 0,
+            (Type::RareWithTime, _, 1...5) => item.increment_quality(3),
+            (Type::RareWithTime, _, 6...10) => item.increment_quality(2),
+            (Type::RareWithTime, _, _) => item.increment_quality(1),
+
+            (Type::Rare, _, sell_in) if sell_in <= 0 => item.increment_quality(2),
+            (Type::Rare, _, _) => item.increment_quality(1),
+
+            (Type::Normal, quality, _) if quality <= 0 => quality,
+            (Type::Normal, _, sell_in) if sell_in <= 0 => item.decrement_quality(2),
+            (Type::Normal, _, _) => item.decrement_quality(1),
         }
     }
 
     fn decrease_sell_by(item: &Item) -> i32 {
-        if item.name == "Sulfuras, Hand of Ragnaros" {
+        if item.type_of() == Type::Legendary {
             item.sell_in
         } else {
             item.sell_in - 1
