@@ -37,11 +37,12 @@ impl GildedRose {
         if item.name == "Sulfuras, Hand of Ragnaros" {
             return;
         }
+        if item.quality >= 50 {
+            return
+        }
         if item.name == "Backstage passes to a TAFKAL80ETC concert" {
-            if item.quality < 50 {
-                item.quality = item.quality + 1;
-            }
-            if item.sell_in < 11 && item.quality < 50 {
+            item.quality = item.quality + 1;
+            if item.sell_in < 11 {
                 if item.sell_in < 6 {
                     item.quality = item.quality + 1;
                 }
@@ -53,10 +54,8 @@ impl GildedRose {
             return;
         }
         if item.name == "Aged Brie" {
-            if item.quality < 50 {
-                item.quality = item.quality + 1;
-            }
-            if item.sell_in <= 0 && item.quality < 50 {
+            item.quality = item.quality + 1;
+            if item.sell_in <= 0 {
                 item.quality = item.quality + 1;
             }
             return;
