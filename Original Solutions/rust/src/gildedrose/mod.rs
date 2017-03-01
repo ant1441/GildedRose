@@ -37,7 +37,22 @@ impl GildedRose {
         if item.name == "Sulfuras, Hand of Ragnaros" {
             return;
         }
-        if item.name != "Aged Brie" && item.name != "Backstage passes to a TAFKAL80ETC concert" {
+        if item.name == "Backstage passes to a TAFKAL80ETC concert" {
+            if item.quality < 50 {
+                item.quality = item.quality + 1;
+            }
+            if item.sell_in < 11 && item.quality < 50 {
+                if item.sell_in < 6 {
+                    item.quality = item.quality + 1;
+                }
+                item.quality = item.quality + 1;
+            }
+            if item.sell_in <= 0 {
+                item.quality = 0;
+            }
+            return;
+        }
+        if item.name != "Aged Brie" {
             if item.quality > 0 {
                 item.quality = item.quality - 1;
                 if item.name.starts_with("Conjured") {
@@ -47,16 +62,6 @@ impl GildedRose {
         } else {
             if item.quality < 50 {
                 item.quality = item.quality + 1;
-
-                if item.name == "Backstage passes to a TAFKAL80ETC concert" {
-                    if item.sell_in < 11 && item.quality < 50 {
-                        if item.sell_in < 6 {
-                            item.quality = item.quality + 1;
-                        }
-                        item.quality = item.quality + 1;
-                    }
-
-                }
             }
         }
 
@@ -65,8 +70,6 @@ impl GildedRose {
                 if item.quality < 50 {
                     item.quality = item.quality + 1;
                 }
-            } else if item.name == "Backstage passes to a TAFKAL80ETC concert" {
-                item.quality = 0;
             } else if item.quality > 0 {
                 item.quality = item.quality - 1;
             }
